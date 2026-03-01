@@ -616,69 +616,57 @@
             margin: 12px auto 0;
         }
 
-        /* FEATURED PHOTO — FULL WIDTH */
+        /* FEATURED BLOCK — CARD STYLE */
         .featured-block {
-            width: 100%;
-            position: relative;
-            overflow: hidden;
-            min-height: 560px;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 100px 24px 0;
         }
 
-        .featured-block img {
-            position: absolute;
-            inset: 0;
+        .featured-block-inner {
+            display: flex;
+            align-items: center;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 36px;
+            overflow: hidden;
+            min-height: 480px;
+        }
+
+        .featured-photo {
+            flex: 0 0 45%;
+            height: 480px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured-photo img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: center 20%;
-            transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+            object-position: center top;
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .featured-block:hover img {
+        .featured-block-inner:hover .featured-photo img {
             transform: scale(1.03);
         }
 
-        /* Dark overlay from right for text readability */
-        .featured-block::before {
+        .featured-photo::after {
             content: '';
             position: absolute;
             inset: 0;
             background: linear-gradient(
                 90deg,
-                rgba(10, 10, 10, 0.85) 0%,
-                rgba(10, 10, 10, 0.6) 40%,
-                rgba(10, 10, 10, 0.15) 70%,
-                transparent 100%
+                transparent 50%,
+                rgba(20, 20, 20, 0.4) 100%
             );
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        /* Subtle brand color tint */
-        .featured-block::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(
-                135deg,
-                rgba(0, 240, 160, 0.04) 0%,
-                transparent 40%,
-                rgba(179, 136, 255, 0.06) 100%
-            );
-            z-index: 2;
             pointer-events: none;
         }
 
         .featured-text {
-            position: relative;
-            z-index: 3;
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 100px 48px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            min-height: 560px;
+            flex: 1;
+            padding: 56px 52px;
         }
 
         .featured-text .section-label {
@@ -687,12 +675,11 @@
 
         .featured-text h2 {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: clamp(2rem, 4vw, 3rem);
+            font-size: clamp(1.6rem, 3.5vw, 2.4rem);
             font-weight: 700;
-            letter-spacing: -1px;
-            line-height: 1.15;
+            letter-spacing: -0.8px;
+            line-height: 1.2;
             margin-bottom: 20px;
-            max-width: 480px;
         }
 
         .featured-text h2 span {
@@ -703,16 +690,16 @@
         }
 
         .featured-text p {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             color: var(--text-mid);
             line-height: 1.7;
-            margin-bottom: 40px;
-            max-width: 420px;
+            margin-bottom: 36px;
+            max-width: 400px;
         }
 
         .featured-stats {
             display: flex;
-            gap: 40px;
+            gap: 32px;
         }
 
         .featured-stat {
@@ -723,35 +710,42 @@
 
         .featured-stat-number {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             font-weight: 700;
             color: var(--mint);
         }
 
         .featured-stat-label {
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             color: var(--text-dim);
         }
 
         @media (max-width: 768px) {
             .featured-block {
-                min-height: 600px;
+                padding: 60px 16px 0;
             }
-            .featured-block::before {
+            .featured-block-inner {
+                flex-direction: column;
+                min-height: auto;
+            }
+            .featured-photo {
+                flex: none;
+                width: 100%;
+                height: 320px;
+            }
+            .featured-photo::after {
                 background: linear-gradient(
-                    0deg,
-                    rgba(10, 10, 10, 0.9) 0%,
-                    rgba(10, 10, 10, 0.5) 50%,
-                    rgba(10, 10, 10, 0.2) 100%
+                    180deg,
+                    transparent 50%,
+                    rgba(20, 20, 20, 0.3) 100%
                 );
             }
             .featured-text {
-                padding: 40px 24px;
-                justify-content: flex-end;
-                min-height: 600px;
+                padding: 32px 24px 40px;
             }
             .featured-stats {
-                gap: 24px;
+                flex-direction: column;
+                gap: 20px;
             }
         }
 
@@ -1096,6 +1090,92 @@
             line-height: 1.6;
         }
 
+        /* LIFESTYLE BLOCK */
+        .lifestyle-block {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 24px 0;
+        }
+
+        .lifestyle-block-inner {
+            position: relative;
+            border-radius: 36px;
+            overflow: hidden;
+            min-height: 400px;
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .lifestyle-block-inner img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            filter: brightness(0.85) contrast(1.05);
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .lifestyle-block-inner:hover img {
+            transform: scale(1.03);
+        }
+
+        .lifestyle-block-inner::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                0deg,
+                rgba(10, 10, 10, 0.85) 0%,
+                rgba(10, 10, 10, 0.3) 40%,
+                transparent 70%
+            );
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .lifestyle-caption {
+            position: relative;
+            z-index: 2;
+            padding: 48px;
+            width: 100%;
+        }
+
+        .lifestyle-caption h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.4rem, 3vw, 2rem);
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+        }
+
+        .lifestyle-caption h3 span {
+            background: linear-gradient(135deg, var(--mint), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .lifestyle-caption p {
+            font-size: 1rem;
+            color: var(--text-mid);
+            max-width: 500px;
+        }
+
+        @media (max-width: 768px) {
+            .lifestyle-block {
+                padding: 24px 16px 0;
+            }
+            .lifestyle-block-inner {
+                min-height: 320px;
+                border-radius: 24px;
+            }
+            .lifestyle-caption {
+                padding: 28px 24px;
+            }
+        }
+
         /* CTA */
         .cta {
             padding: 120px 24px;
@@ -1413,23 +1493,27 @@
 
     <!-- FEATURED BLOCK -->
     <section class="featured-block fade-in">
-        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=1600&q=85&auto=format" alt="Jonge vrouw met zelfvertrouwen" loading="lazy">
-        <div class="featured-text">
-            <div class="section-label">Gebouwd voor jou</div>
-            <h2>De generatie die <span>haar eigen regels</span> maakt</h2>
-            <p>Geen financieel jargon. Geen schuldgevoel. Gewoon een app die begrijpt hoe jij leeft — en je helpt om slimmer met je geld om te gaan.</p>
-            <div class="featured-stats">
-                <div class="featured-stat">
-                    <div class="featured-stat-number">18-28</div>
-                    <div class="featured-stat-label">Gemaakt voor Gen-Z</div>
-                </div>
-                <div class="featured-stat">
-                    <div class="featured-stat-number">5 min</div>
-                    <div class="featured-stat-label">Per dag is genoeg</div>
-                </div>
-                <div class="featured-stat">
-                    <div class="featured-stat-number">&euro;0</div>
-                    <div class="featured-stat-label">Gratis te gebruiken</div>
+        <div class="featured-block-inner">
+            <div class="featured-photo">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=900&q=85&auto=format" alt="Jonge vrouw met zelfvertrouwen" loading="lazy">
+            </div>
+            <div class="featured-text">
+                <div class="section-label">Gebouwd voor jou</div>
+                <h2>De generatie die <span>haar eigen regels</span> maakt</h2>
+                <p>Geen financieel jargon. Geen schuldgevoel. Gewoon een app die begrijpt hoe jij leeft — en je helpt om slimmer met je geld om te gaan.</p>
+                <div class="featured-stats">
+                    <div class="featured-stat">
+                        <div class="featured-stat-number">18-28</div>
+                        <div class="featured-stat-label">Gemaakt voor Gen-Z</div>
+                    </div>
+                    <div class="featured-stat">
+                        <div class="featured-stat-number">5 min</div>
+                        <div class="featured-stat-label">Per dag is genoeg</div>
+                    </div>
+                    <div class="featured-stat">
+                        <div class="featured-stat-number">&euro;0</div>
+                        <div class="featured-stat-label">Gratis te gebruiken</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1507,6 +1591,17 @@
                 <h3>Anti-anxiety design</h3>
                 <p>Niet nóg een dashboard met rode cijfers. WALTR heeft een Money Mood tracker, een chill-modus als je even niet wil weten, en progressie die laat zien dat je het wél goed doet.</p>
                 <div class="usp-example">"Je bent 3 weken op rij binnen je eetbudget gebleven. Dat is top 12% van alle WALTR-users."</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LIFESTYLE BLOCK -->
+    <section class="lifestyle-block fade-in">
+        <div class="lifestyle-block-inner">
+            <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1400&q=85&auto=format" alt="Vrienden samen lachen — de WALTR generatie" loading="lazy">
+            <div class="lifestyle-caption">
+                <h3>Geld is <span>geen taboe</span> meer</h3>
+                <p>Met WALTR praat jouw generatie gewoon over geld. Open, eerlijk, zonder oordeel. Omdat je het samen beter snapt dan alleen.</p>
             </div>
         </div>
     </section>
