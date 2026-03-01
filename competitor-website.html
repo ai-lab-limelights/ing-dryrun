@@ -616,9 +616,9 @@
             margin: 12px auto 0;
         }
 
-        /* PHOTO GRID — SPOTIFY STYLE */
+        /* PHOTO GRID — REVOLUT EDITORIAL STYLE */
         .photo-grid-section {
-            padding: 100px 24px 120px;
+            padding: 120px 24px 140px;
             position: relative;
             overflow: hidden;
         }
@@ -635,7 +635,7 @@
 
         .photo-grid-header {
             text-align: center;
-            margin-bottom: 60px;
+            margin-bottom: 72px;
         }
 
         .photo-grid-header .section-label {
@@ -661,91 +661,98 @@
 
         .photo-mosaic {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            grid-template-rows: 280px 200px 260px;
-            gap: 16px;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: 420px 320px;
+            gap: 20px;
             max-width: 1100px;
             margin: 0 auto;
         }
 
         .photo-card {
-            border-radius: 20px;
+            border-radius: 28px;
             overflow: hidden;
             position: relative;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-
-        .photo-card:hover {
-            transform: scale(1.03);
-            z-index: 2;
+            cursor: default;
         }
 
         .photo-card img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            filter: brightness(0.85) contrast(1.05);
         }
 
         .photo-card:hover img {
-            transform: scale(1.08);
+            transform: scale(1.04);
+            filter: brightness(0.9) contrast(1.08);
         }
 
+        /* Subtle gradient overlay — always visible, editorial feel */
         .photo-card::after {
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 50%);
-            opacity: 0;
-            transition: opacity 0.4s;
+            background: linear-gradient(
+                180deg,
+                rgba(10, 10, 10, 0) 40%,
+                rgba(10, 10, 10, 0.65) 100%
+            );
+            pointer-events: none;
+            z-index: 1;
         }
 
-        .photo-card:hover::after {
-            opacity: 1;
+        /* Colored accent glow on specific cards */
+        .photo-card.glow-mint::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                135deg,
+                rgba(0, 240, 160, 0.08) 0%,
+                transparent 60%
+            );
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .photo-card.glow-purple::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                225deg,
+                rgba(179, 136, 255, 0.1) 0%,
+                transparent 60%
+            );
+            z-index: 2;
+            pointer-events: none;
         }
 
         .photo-card .photo-label {
             position: absolute;
-            bottom: 16px;
-            left: 20px;
-            right: 20px;
-            color: white;
-            font-size: 0.85rem;
-            font-weight: 600;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: all 0.4s;
+            bottom: 24px;
+            left: 28px;
+            right: 28px;
             z-index: 3;
         }
 
-        .photo-card:hover .photo-label {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .photo-card .photo-tag {
-            position: absolute;
-            top: 16px;
-            left: 16px;
-            background: rgba(0, 240, 160, 0.9);
-            color: #0a0a0a;
-            font-size: 0.7rem;
+        .photo-card .photo-label h4 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.15rem;
             font-weight: 700;
-            padding: 4px 10px;
-            border-radius: 20px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            z-index: 3;
-            opacity: 0;
-            transition: opacity 0.3s;
+            letter-spacing: -0.3px;
+            margin-bottom: 4px;
+            color: #fff;
         }
 
-        .photo-card:hover .photo-tag {
-            opacity: 1;
+        .photo-card .photo-label p {
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.65);
+            line-height: 1.4;
         }
 
-        /* Grid layout — asymmetric Spotify-style */
+        /* Grid layout — editorial asymmetric */
         .photo-card:nth-child(1) {
             grid-column: 1 / 3;
             grid-row: 1;
@@ -755,43 +762,22 @@
             grid-row: 1;
         }
         .photo-card:nth-child(3) {
-            grid-column: 4;
-            grid-row: 1 / 3;
-        }
-        .photo-card:nth-child(4) {
             grid-column: 1;
-            grid-row: 2 / 4;
-        }
-        .photo-card:nth-child(5) {
-            grid-column: 2 / 4;
             grid-row: 2;
         }
-        .photo-card:nth-child(6) {
+        .photo-card:nth-child(4) {
             grid-column: 2;
-            grid-row: 3;
+            grid-row: 2;
         }
-        .photo-card:nth-child(7) {
-            grid-column: 3 / 5;
-            grid-row: 3;
-        }
-
-        /* Colored accent borders on some cards */
-        .photo-card.accent-mint {
-            border: 2px solid transparent;
-        }
-        .photo-card.accent-mint:hover {
-            border-color: var(--mint);
-            box-shadow: 0 0 30px rgba(0, 240, 160, 0.15);
-        }
-        .photo-card.accent-purple:hover {
-            border: 2px solid var(--purple);
-            box-shadow: 0 0 30px rgba(179, 136, 255, 0.15);
+        .photo-card:nth-child(5) {
+            grid-column: 3;
+            grid-row: 2;
         }
 
         @media (max-width: 768px) {
             .photo-mosaic {
-                grid-template-columns: repeat(2, 1fr);
-                grid-template-rows: 200px 180px 200px 180px;
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: 280px 240px 240px;
                 gap: 12px;
             }
             .photo-card:nth-child(1) {
@@ -814,13 +800,13 @@
                 grid-column: 2;
                 grid-row: 3;
             }
-            .photo-card:nth-child(6) {
-                grid-column: 1;
-                grid-row: 4;
+            .photo-card .photo-label {
+                bottom: 16px;
+                left: 16px;
+                right: 16px;
             }
-            .photo-card:nth-child(7) {
-                grid-column: 2;
-                grid-row: 4;
+            .photo-card .photo-label h4 {
+                font-size: 0.95rem;
             }
         }
 
@@ -1483,44 +1469,44 @@
     <!-- PHOTO GRID -->
     <section class="photo-grid-section">
         <div class="photo-grid-header fade-in">
-            <div class="section-label">De generatie die alles verandert</div>
-            <h2>Gebouwd voor mensen die <span>hun eigen regels</span> maken</h2>
+            <div class="section-label">Gebouwd voor jou</div>
+            <h2>De generatie die <span>hun eigen regels</span> maakt</h2>
         </div>
         <div class="photo-mosaic">
-            <div class="photo-card accent-mint fade-in">
-                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80" alt="Jonge mensen werken samen" loading="lazy">
-                <span class="photo-tag">Community</span>
-                <div class="photo-label">Samen slimmer met geld omgaan</div>
+            <div class="photo-card glow-mint fade-in">
+                <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?w=1200&q=85&auto=format" alt="Vrienden samen lachend" loading="lazy">
+                <div class="photo-label">
+                    <h4>Samen verder komen</h4>
+                    <p>Money talk hoeft niet awkward te zijn</p>
+                </div>
+            </div>
+            <div class="photo-card glow-purple fade-in">
+                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=800&q=85&auto=format" alt="Jonge vrouw met zelfvertrouwen" loading="lazy">
+                <div class="photo-label">
+                    <h4>Zelfverzekerd keuzes maken</h4>
+                    <p>Weten waar je aan toe bent</p>
+                </div>
             </div>
             <div class="photo-card fade-in">
-                <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=600&q=80" alt="Student met laptop" loading="lazy">
-                <span class="photo-tag">Leren</span>
-                <div class="photo-label">Financieel slim in 5 min per dag</div>
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=85&auto=format" alt="Jonge man relaxed" loading="lazy">
+                <div class="photo-label">
+                    <h4>Chill met geld</h4>
+                    <p>Geen stress, gewoon inzicht</p>
+                </div>
             </div>
-            <div class="photo-card accent-purple fade-in">
-                <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=600&q=80" alt="Creatieve werkplek" loading="lazy">
-                <span class="photo-tag">Creators</span>
-                <div class="photo-label">Side hustles die groeien</div>
+            <div class="photo-card glow-mint fade-in">
+                <img src="https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?w=800&q=85&auto=format" alt="Jonge vrouw op telefoon" loading="lazy">
+                <div class="photo-label">
+                    <h4>Altijd in je pocket</h4>
+                    <p>Je coach is een swipe away</p>
+                </div>
             </div>
-            <div class="photo-card fade-in">
-                <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&q=80" alt="Vrienden op avontuur" loading="lazy">
-                <span class="photo-tag">Vrijheid</span>
-                <div class="photo-label">Leven zonder geldstress</div>
-            </div>
-            <div class="photo-card accent-mint fade-in">
-                <img src="https://images.unsplash.com/photo-1531545514256-b1400bc00f31?w=800&q=80" alt="Groep jonge professionals" loading="lazy">
-                <span class="photo-tag">Groei</span>
-                <div class="photo-label">Van eerste salaris tot eerste investering</div>
-            </div>
-            <div class="photo-card fade-in">
-                <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?w=600&q=80" alt="Vrienden lachend" loading="lazy">
-                <span class="photo-tag">Vibe</span>
-                <div class="photo-label">Money talk without the awkward</div>
-            </div>
-            <div class="photo-card accent-purple fade-in">
-                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&q=80" alt="Tech-savvy op telefoon" loading="lazy">
-                <span class="photo-tag">AI Coach</span>
-                <div class="photo-label">Jouw persoonlijke money mentor</div>
+            <div class="photo-card glow-purple fade-in">
+                <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=800&q=85&auto=format" alt="Jonge man in de stad" loading="lazy">
+                <div class="photo-label">
+                    <h4>Jouw tempo, jouw regels</h4>
+                    <p>Groeien op je eigen manier</p>
+                </div>
             </div>
         </div>
     </section>
