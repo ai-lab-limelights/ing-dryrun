@@ -168,7 +168,8 @@
         }
 
         .hero h1 .highlight {
-            background: linear-gradient(135deg, var(--mint), var(--purple));
+            background: linear-gradient(135deg, var(--mint), var(--purple), var(--mint));
+            background-size: 200% 200%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -1378,6 +1379,77 @@
             transform: translateY(0);
         }
 
+        /* HERO STAGGERED ENTRANCE */
+        .hero-badge, .hero h1, .hero p, .hero-buttons {
+            opacity: 0;
+            transform: translateY(25px);
+            animation: heroEntrance 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .hero-badge { animation-delay: 0.1s; }
+        .hero h1 { animation-delay: 0.3s; }
+        .hero p { animation-delay: 0.5s; }
+        .hero-buttons { animation-delay: 0.7s; }
+        .phone-section { opacity: 0; transform: translateY(30px); animation: heroEntrance 1s cubic-bezier(0.16, 1, 0.3, 1) 0.9s forwards; }
+
+        @keyframes heroEntrance {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* HERO GRADIENT GLOW */
+        .hero h1 .highlight {
+            background-size: 200% 200%;
+            animation: gradientShift 4s ease-in-out infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* STAGGERED CHILDREN */
+        .fade-in-stagger > * {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .fade-in-stagger.visible > *:nth-child(1) { transition-delay: 0s; }
+        .fade-in-stagger.visible > *:nth-child(2) { transition-delay: 0.12s; }
+        .fade-in-stagger.visible > *:nth-child(3) { transition-delay: 0.24s; }
+        .fade-in-stagger.visible > *:nth-child(4) { transition-delay: 0.36s; }
+
+        .fade-in-stagger.visible > * {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* SLIDE IN FROM LEFT / RIGHT */
+        .slide-left {
+            opacity: 0;
+            transform: translateX(-60px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .slide-right {
+            opacity: 0;
+            transform: translateX(60px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .slide-left.visible, .slide-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* COUNTER ANIMATION NUMBER */
+        .stat-number, .featured-stat-number, .community-stat-num {
+            display: inline-block;
+        }
+
         /* RESPONSIVE */
         @media (max-width: 768px) {
             nav {
@@ -1600,28 +1672,28 @@
     <section class="problem" id="probleem">
         <div class="section-label fade-in">Real talk</div>
         <h2 class="fade-in">You're not bad with money.<br>Je hebt het nooit geleerd.</h2>
-        <div class="stats-grid">
-            <div class="stat-card fade-in">
-                <div class="stat-number">70%</div>
+        <div class="stats-grid fade-in-stagger">
+            <div class="stat-card">
+                <div class="stat-number" data-count="70" data-suffix="%">70%</div>
                 <div class="stat-text">van mensen in onze leeftijd ligt wakker van geldstress. Niet omdat we teveel uitgeven — maar omdat niemand ons ooit heeft uitgelegd hoe het werkt.</div>
             </div>
-            <div class="stat-card fade-in">
-                <div class="stat-number">33%</div>
+            <div class="stat-card">
+                <div class="stat-number" data-count="33" data-suffix="%">33%</div>
                 <div class="stat-text">opent z'n bank-app niet als het spannend is. Gewoon negeren en hopen dat het goed komt. Herkenbaar? Ja. Healthy? Nee.</div>
             </div>
-            <div class="stat-card fade-in">
-                <div class="stat-number">&euro;300</div>
+            <div class="stat-card">
+                <div class="stat-number" data-count="300" data-prefix="€">€300</div>
                 <div class="stat-text">Een onverwachte rekening van 300 euro en je hele maand is naar de klote. Niet omdat je arm bent — maar omdat niemand je leerde hoe je dat opvangt.</div>
             </div>
         </div>
     </section>
 
     <!-- ING VS WALTR -->
-    <section class="ing-problem fade-in" id="vergelijking">
-        <div class="section-label">Spot the difference</div>
-        <h2>Je bank-app? Lowkey gebouwd voor je ouders.</h2>
+    <section class="ing-problem" id="vergelijking">
+        <div class="section-label fade-in">Spot the difference</div>
+        <h2 class="fade-in">Je bank-app? Lowkey gebouwd voor je ouders.</h2>
         <div class="comparison">
-            <div class="comparison-card old">
+            <div class="comparison-card old slide-left">
                 <h3>🏦 Je huidige bank</h3>
                 <ul>
                     <li><span class="icon">✕</span> "Geachte rekeninghouder" — bro, ik ben 23</li>
@@ -1631,7 +1703,7 @@
                     <li><span class="icon">✕</span> Vibe: alsof je belastingaangifte doet</li>
                 </ul>
             </div>
-            <div class="comparison-card new">
+            <div class="comparison-card new slide-right">
                 <h3><span style="color: var(--mint)">W</span> WALTR</h3>
                 <ul>
                     <li><span class="icon">✓</span> "Je hebt 40% minder bezorgd deze maand. King."</li>
@@ -1650,20 +1722,20 @@
             <div class="section-label fade-in">How it works</div>
             <h2 class="fade-in">Drie dingen die je bank literally nooit gaat doen</h2>
         </div>
-        <div class="usps-grid">
-            <div class="usp-card fade-in">
+        <div class="usps-grid fade-in-stagger">
+            <div class="usp-card">
                 <div class="usp-icon">🧠</div>
                 <h3>Een coach, geen chatbot</h3>
                 <p>WALTR kent je patronen, snapt je vibe, en geeft context bij alles wat je uitgeeft. Geen standaard tips. Gewoon iemand die jou kent — en eerlijk is.</p>
                 <div class="usp-example">"€187 aan koffie deze maand. Dat is letterlijk een retour Barcelona. Just saying."</div>
             </div>
-            <div class="usp-card fade-in">
+            <div class="usp-card">
                 <div class="usp-icon">⚡</div>
                 <h3>Je leert door te leven</h3>
                 <p>Geen cursusjes of quizzen. Elke betaling, elke boeking, elke Tikkie — WALTR legt het uit terwijl het gebeurt. Je wordt slimmer zonder dat je het doorhebt.</p>
                 <div class="usp-example">"Die €2 round-up per dag? Over een jaar is dat €780. Dat is een nieuwe iPhone. Automatisch."</div>
             </div>
-            <div class="usp-card fade-in">
+            <div class="usp-card">
                 <div class="usp-icon">🧘</div>
                 <h3>Designed tegen stress</h3>
                 <p>Geen rode cijfers. Geen schuldgevoel. WALTR heeft een Money Mood tracker, een chill-modus als je even niet wil weten, en laat zien dat je het wél goed doet.</p>
@@ -1711,29 +1783,29 @@
     <section class="why-now" id="waarom-nu">
         <div class="section-label fade-in">Timing</div>
         <h2 class="fade-in">Why now? Omdat alles klopt</h2>
-        <div class="timeline">
-            <div class="timeline-item fade-in">
+        <div class="timeline fade-in-stagger">
+            <div class="timeline-item">
                 <div class="timeline-dot">🤖</div>
                 <div class="timeline-content">
                     <h3>AI snapt je nu echt</h3>
                     <p>Een persoonlijke coach was altijd iets voor rijke mensen. AI maakt dat mogelijk voor iedereen. Voor niks.</p>
                 </div>
             </div>
-            <div class="timeline-item fade-in">
+            <div class="timeline-item">
                 <div class="timeline-dot">📱</div>
                 <div class="timeline-content">
                     <h3>Je bankdata is van jou</h3>
                     <p>Open Banking maakt het mogelijk om al je rekeningen te koppelen. Wij hoeven geen bank te zijn om beter te zijn dan je bank.</p>
                 </div>
             </div>
-            <div class="timeline-item fade-in">
+            <div class="timeline-item">
                 <div class="timeline-dot">😰</div>
                 <div class="timeline-content">
                     <h3>Geldstress is een epidemie</h3>
                     <p>7 op de 10 jongeren slaapt slechter door geldzorgen. De behoefte is er. Een goede oplossing was er nog niet.</p>
                 </div>
             </div>
-            <div class="timeline-item fade-in">
+            <div class="timeline-item">
                 <div class="timeline-dot">🏦</div>
                 <div class="timeline-content">
                     <h3>Banken gaan dit nooit doen</h3>
@@ -1764,11 +1836,20 @@
     </footer>
 
     <script>
-        // Intersection Observer for fade-in animations
+        // Intersection Observer for all scroll animations
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
+
+                    // Trigger counter animation for stat numbers inside this element
+                    entry.target.querySelectorAll('[data-count]').forEach(counter => {
+                        animateCounter(counter);
+                    });
+                    // Also check if the element itself is a counter
+                    if (entry.target.dataset.count) {
+                        animateCounter(entry.target);
+                    }
                 }
             });
         }, {
@@ -1776,7 +1857,31 @@
             rootMargin: '0px 0px -50px 0px'
         });
 
-        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+        // Observe all animated elements
+        document.querySelectorAll('.fade-in, .fade-in-stagger, .slide-left, .slide-right').forEach(el => observer.observe(el));
+
+        // Counter animation
+        function animateCounter(el) {
+            if (el.dataset.animated) return;
+            el.dataset.animated = 'true';
+
+            const target = parseInt(el.dataset.count);
+            const prefix = el.dataset.prefix || '';
+            const suffix = el.dataset.suffix || '';
+            const duration = 1500;
+            const start = performance.now();
+
+            function update(now) {
+                const elapsed = now - start;
+                const progress = Math.min(elapsed / duration, 1);
+                // Ease out cubic
+                const eased = 1 - Math.pow(1 - progress, 3);
+                const current = Math.round(target * eased);
+                el.textContent = prefix + current.toLocaleString('nl-NL') + suffix;
+                if (progress < 1) requestAnimationFrame(update);
+            }
+            requestAnimationFrame(update);
+        }
 
         // Signup handler
         function handleSignup() {
