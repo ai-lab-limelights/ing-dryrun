@@ -46,30 +46,50 @@ A healthcare disruptor looks nothing like a crypto challenger which looks nothin
 ## Tech Stack
 
 - **Tailwind CSS** via CDN: `<script src="https://cdn.tailwindcss.com"></script>`
+- **FlyonUI** component library via CDN — provides semantic component classes (`card`, `btn`, `navbar`, `stat`, `timeline`, etc.) and built-in device mockups (`mockup-phone`, `mockup-browser`). Load CSS + JS:
+  - CSS: `<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flyonui@2.4.1/flyonui.css">`
+  - JS (for interactive components): `<script src="https://cdn.jsdelivr.net/npm/flyonui@2.4.1/flyonui.js"></script>`
 - **Single HTML file** with inline Tailwind config for custom colors/fonts
 - **Google Fonts** loaded via `<link>` tags
-- **Vanilla JS** for animations and interactions
+- **Vanilla JS** for custom animations and interactions
 - No other frameworks or dependencies
 
-### Tailwind Setup Pattern
+Browse available components at: https://flyonui.com/docs/component/
+Browse mockups at: https://flyonui.com/docs/mockups/phone/ and https://flyonui.com/docs/mockups/browser/
+Browse landing page blocks at: https://flyonui.com/blocks (hero sections, features, pricing, testimonials, CTA, navbar, footer — 500+ ready-made blocks to use as structural starting points)
+
+### FlyonUI Usage
+
+Use FlyonUI semantic classes for structure (cards, buttons, navbars, stats, badges, etc.) and Tailwind utilities for custom styling on top. This gives you professional components fast, while still having full control over colors, spacing, and layout.
 
 ```html
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-tailwind.config = {
-  theme: {
-    extend: {
-      colors: {
-        // Defined per competitor — NO defaults here
-      },
-      fontFamily: {
-        // Defined per competitor — NO defaults here
-      }
-    }
-  }
-}
-</script>
+<!-- Example: FlyonUI card + Tailwind custom styling -->
+<div class="card card-border" style="...">
+  <div class="card-body">
+    <h5 class="card-title">Feature title</h5>
+    <p>Description</p>
+  </div>
+</div>
+
+<!-- Example: FlyonUI phone mockup with product screenshot -->
+<div class="mockup-phone">
+  <div class="mockup-phone-display">
+    <img src="https://images.unsplash.com/photo-XXXXX?w=400&q=80" alt="App screen" class="w-full">
+  </div>
+</div>
+
+<!-- Example: FlyonUI browser mockup for SaaS dashboard -->
+<div class="mockup-browser border-base-300 border">
+  <div class="mockup-browser-toolbar">
+    <div class="input">https://app.yourcompetitor.com</div>
+  </div>
+  <div class="border-base-300 border-t">
+    <img src="..." alt="Dashboard" class="w-full">
+  </div>
+</div>
 ```
+
+**Important:** FlyonUI comes with themes. Use `data-theme="dark"` or `data-theme="light"` on the `<html>` element to match the competitor's visual direction. You can also override FlyonUI's CSS variables to set custom brand colors.
 
 ## Step-by-Step Design Process
 
@@ -190,18 +210,44 @@ Create a single HTML file using Tailwind CSS. **Use the copy and content that al
 4. **Keep the voice consistent** — the copy was written with a specific tone. Your design and any new copy should match that tone exactly.
 
 #### Structural Principles
-- The page structure should reflect what the competitor needs to communicate. Not every competitor needs a features grid. Not every competitor needs testimonials. Think: what sections does THIS specific competitor need to convince someone?
-- Common sections to consider (use what fits, skip what doesn't):
-  - Navigation
-  - Hero / opening statement
-  - Problem framing
-  - Solution / value proposition
-  - How it works / product showcase
-  - Key capabilities or features
-  - Social proof / traction
-  - Call to action
-  - Footer
-- The ORDER matters. A competitor targeting frustrated enterprise buyers might lead with the problem. A competitor with breakthrough tech might lead with a demo. Let the strategy dictate the flow.
+- DO NOT follow a standard landing page template. No "hero → problem → solution → features → social proof → CTA" default flow. That's what makes every AI-generated site look the same.
+- Instead, ask yourself: **what is the ONE thing this competitor needs to communicate first?** Start there. Then ask: what comes next to make someone believe it? Build the page as an ARGUMENT, not a template.
+- Every competitor tells a different story. The page structure IS the story. Examples of radically different approaches:
+
+  **A price disruptor** might open with a giant price comparison table — no hero needed. The shock of the price difference IS the hero.
+  
+  **A trust-based competitor** might open with a wall of logos and testimonials BEFORE even explaining what they do — because credibility is the whole game.
+  
+  **A tech-first competitor** might open with a live product demo or interactive element — showing beats telling.
+  
+  **A values-driven competitor** might open with a manifesto or bold statement — emotion before features.
+  
+  **An incumbent-killer** might open by naming the incumbent's failures directly — provocation as strategy.
+
+- You are FORBIDDEN from using this section order: nav → hero → problem → solution → features → testimonials → CTA → footer. If you catch yourself building that, stop and rethink.
+- The page can have 3 sections or 12. It can scroll horizontally. It can be a single full-screen statement. It can be a long editorial scroll. Let the story decide.
+
+#### Using FlyonUI Blocks
+Use FlyonUI blocks (https://flyonui.com/blocks) as **building blocks for individual sections**, NOT as a page template. The page structure and story flow come from the competitor's proposition — the blocks give you professional components to build each section faster.
+
+- Browse hero sections, features, pricing, testimonials, stats, CTA, navbar, footer blocks
+- Pick blocks that fit the competitor type, then **heavily customize**: change colors, fonts, imagery, layout proportions, spacing
+- **Combine creatively** — a price disruptor might use a stats block as their hero. A trust competitor might use testimonials as their opening section. Don't follow the block's intended position.
+- **Strip all placeholder content** — replace with approved copywriter text and real photos
+- A fintech competitor could use: navbar block + hero with phone mockup + stats block + features + CTA
+- A B2B platform could use: hero with browser mockup + logo cloud + bento grid features + pricing + testimonials
+- Mix FlyonUI blocks with custom-built sections. Not every section needs a block — sometimes raw Tailwind is better for unique layouts.
+
+#### Layout Variation
+Every site must feel structurally different. Vary these actively:
+
+- **Grid structure** — some pages are single-column editorial, others are multi-column asymmetric, others use full-width alternating blocks, others use a magazine-style mixed layout
+- **Content density** — some pages breathe with massive whitespace, others are dense and information-rich
+- **Visual weight distribution** — some pages are top-heavy (big hero, lighter below), others build to a crescendo, others maintain consistent rhythm
+- **Navigation approach** — sticky nav, hidden nav, no nav at all, side nav, bottom nav — what fits this brand?
+- **Section transitions** — hard cuts between sections, flowing gradients, overlapping elements, diagonal dividers, or no visible sections at all
+- **Typography scale** — some pages use one massive headline and small body text, others use consistent medium sizing, others mix dramatically
+- **Interactive elements** — hover reveals, scroll-triggered transformations, parallax layers, animated counters, expandable sections — pick what fits, skip what doesn't
 
 #### Tailwind Usage
 - Use Tailwind utility classes for all styling
@@ -216,10 +262,20 @@ Create a single HTML file using Tailwind CSS. **Use the copy and content that al
 - Use `font-display: swap` for performance
 - Size headings appropriately — but what "appropriate" means depends on the brand. A bold disruptor might use massive type. A premium brand might use restrained, elegant sizes.
 
-#### Visual Elements
-- NO placeholder images, NO broken image links
-- Create atmosphere with CSS: gradients, blend modes, SVG patterns, backdrop filters, shadows
-- The visual approach should match the brand. Not every site needs animated gradients. Some competitors are better served by clean whitespace and sharp typography. Others need energy and motion. Decide based on the proposition.
+#### Visual Elements & Imagery
+- Use real photos from **Pexels** (`images.pexels.com`), **Unsplash** (`images.unsplash.com`), or **Pixabay** (`pixabay.com`) — never placeholder boxes or broken links
+- Pick images that match the competitor's industry, audience, and visual tone
+- Use Unsplash/Pexels direct image URLs with sizing parameters, e.g.:
+  - Unsplash: `https://images.unsplash.com/photo-XXXXX?w=800&q=80`
+  - Pexels: `https://images.pexels.com/photos/XXXXX/pexels-photo-XXXXX.jpeg?w=800`
+- **Product/platform mockups**: Show the competitor's product in context. Use FlyonUI's built-in mockup components:
+  - **Phone mockup** (`mockup-phone`) — for app/fintech competitors. Put a product screenshot or UI inside.
+  - **Browser mockup** (`mockup-browser`) — for SaaS/platform competitors. Shows a URL bar + content area.
+  - **No mockup** — sometimes a clean product image or dashboard screenshot without a device frame is stronger. A logistics disruptor might skip the mockup entirely and show a warehouse photo instead.
+  - Choose what fits: a slick fintech shows a phone mockup with an app screen. A B2B platform shows a browser mockup with a dashboard. A physical product company uses a photo.
+- Use CSS to blend photos into the design: `object-fit`, `mix-blend-mode`, overlays, gradients over images, rounded corners, shadows
+- Create atmosphere with CSS where photos aren't needed: gradients, blend modes, SVG patterns, backdrop filters, shadows
+- The visual approach should match the brand. Not every site needs hero images. Some competitors are better served by clean typography and one strong product visual. Others need full-bleed photography. Decide based on the proposition.
 
 #### Animations
 - Add scroll-triggered fade-ins using Intersection Observer
@@ -243,6 +299,27 @@ After building, DON'T ask abstract design questions. Ask in terms they understan
 
 When they give feedback in non-design language ("het voelt een beetje saai" / "it feels a bit boring"), translate that into concrete design changes yourself. Don't ask them HOW to fix it — that's your job. Say what you're going to do and do it.
 
+### Step 5: UX Review (automatic)
+
+After the participant is happy with the design, run a UX review yourself before delivering. Don't ask if they want it — just do it. You are both the designer and the UX reviewer.
+
+**Review the page through the target customer's eyes. Check:**
+
+1. **First 5 seconds** — Is it immediately clear what this company does? Would a new visitor understand without scrolling?
+2. **Problem framing** — Is the pain real and specific? Or does it sound generic and safe?
+3. **Value proposition** — Are the key differentiators genuinely different from each other? Do they connect to the main disruptive angle?
+4. **Threat level** — Is this sharp enough to make existing players uncomfortable? Or could they shrug it off?
+5. **Target customer** — Does the intended customer feel seen and spoken to directly?
+6. **Copy quality** — Anything vague, corporate, or forgettable? Every line earns its place.
+7. **Visual flow** — Does the eye move naturally through the page? Is there a clear reading path?
+8. **Mobile** — Does it work on a phone without breaking?
+
+**What to do with findings:**
+- Fix everything you find. Don't present a list of issues — just improve the page.
+- If you make significant changes, briefly tell the participant what you sharpened and why: *"Ik heb de hero tekst aangescherpt — het was niet direct duidelijk wat jullie doen. En het danger-blok heb ik concreter gemaakt."*
+- Small fixes (spacing, alignment, contrast) → just fix silently.
+- The goal: when you deliver the page, it should already be UX-reviewed. No separate step needed for the participant.
+
 ## What NOT to Do
 
 - ❌ Suggest design options before understanding the proposition
@@ -251,7 +328,10 @@ When they give feedback in non-design language ("het voelt een beetje saai" / "i
 - ❌ Ignore output from the strategizer, market analyser, or prototype designer agents
 - ❌ Default to dark mode (or light mode — let the proposition decide)
 - ❌ Default to any specific font family
-- ❌ Use the same layout structure for every competitor
+- ❌ **Use the standard SaaS layout: nav → hero → problem → solution → features → testimonials → CTA → footer. This is BANNED.**
+- ❌ Build the same page structure twice — if you've built a top-heavy hero page before in this session, the next one needs a fundamentally different structure
+- ❌ Default to a sticky top navigation bar — consider alternatives
+- ❌ Default to a 3-column feature card grid — there are dozens of other ways to show capabilities
 - ❌ Add sections "because they're standard" — every section earns its place
 - ❌ Use generic startup copy ("We're revolutionizing X")
 - ❌ Show predefined color palettes or mood options
@@ -261,15 +341,19 @@ When they give feedback in non-design language ("het voelt een beetje saai" / "i
 - ❌ Ask participants to pick fonts, colors, or layouts
 - ❌ Present technical design briefs with hex codes and font names
 - ❌ Assume participants know what looks good — guide them
+- ❌ Copy-paste component patterns from reference files without adapting them to the brand
 
 ## What TO Do
 
 - ✅ Read the full conversation history and project files BEFORE asking anything
 - ✅ Use existing copy, names, taglines, and feature descriptions from the session
 - ✅ Let every design decision trace back to the proposition
+- ✅ **Invent a unique page structure for every competitor** — the structure itself should tell the story
+- ✅ Think about what this specific competitor would put FIRST on their page — that's your opening
+- ✅ Vary everything: layout grid, content density, navigation style, section transitions, typography scale
 - ✅ Explain choices in plain language ("donkerder en strakker omdat jullie competitor serieus en technisch is")
 - ✅ Make each website feel like it was designed by a different agency
-- ✅ Use Tailwind's full utility system — don't fight it with custom CSS unless needed
+- ✅ Use Tailwind's full utility system — build from scratch every time, don't reuse patterns
 - ✅ Create visual hierarchy through deliberate contrast
 - ✅ Write copy that sounds like this specific competitor, not generic startup speak
 - ✅ Make the social proof feel real and specific to the industry
@@ -281,12 +365,17 @@ When they give feedback in non-design language ("het voelt een beetje saai" / "i
 ## Technical Output
 
 - Single HTML file: `competitor-website.html`
-- Tailwind CSS via CDN
+- Tailwind CSS via CDN + FlyonUI component library via CDN
 - Google Fonts via `<link>` tags
+- Real photos from Pexels, Unsplash, or Pixabay (direct image URLs)
+- FlyonUI device mockups for product/platform visuals when appropriate
 - Custom animations in a `<style>` block if needed
 - Vanilla JS in a `<script>` block
 - Opens perfectly in any modern browser
 - Responsive out of the box via Tailwind prefixes
+
+Technical utilities (scroll animation JS, background effects CSS, boilerplate): `references/tailwind-patterns.md`
+That file deliberately has ZERO component templates. Build every component from scratch.
 
 ## Language
 

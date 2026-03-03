@@ -97,49 +97,27 @@ Use their answer to brief the Design Agent.
 
 ---
 
-### Step 2 — Invoke the Design Agent
+### Step 2 — Invoke the Copywriter Agent
 
-After all seven questions are answered, **before building**, ask:
+After all seven questions are answered, say:
 
-*"Before I start building — want me to bring in the Design Agent? It'll put together a visual style based on your concept. You can approve or tweak before anything gets built."*
+*"Strategy is locked. I'm bringing in the Copywriter Agent to write all the text for your page."*
 
-If yes → run the **Design Agent** (see below). Wait for their approval.
-If no → proceed directly to Step 3 with the look and feel answer from Question 7.
-
----
-
-### Step 3 — Invoke the Copywriter Agent
-
-After the Design Agent (or if skipped), ask:
-
-*"Want me to bring in the Copywriter Agent before I build? It'll write all the text for your page. You can review and adjust before anything goes live."*
-
-If yes → run the **Copywriter Agent** (see below). Wait for their approval before building.
-If no → proceed directly to Step 4. Claude Code will write the text during the build.
+Run the **Copywriter Agent** (see below). Wait for their approval before moving to the Design Agent.
 
 ---
 
-### Step 4 — Build the page
+### Step 3 — Invoke the Design Agent
 
-Once design and text are ready (or skipped), say:
-*"Perfect. Building your page now."*
+After the copy is approved, say:
 
-Then immediately generate a complete `index.html` using the approved text and design. Do not ask for more input. Build it.
+*"Copy is locked. Now I'm bringing in the Design Agent to design and build your page."*
 
----
-
-### Step 5 — Invoke the UX Agent
-
-After the page is built, ask:
-
-*"Page is done. Want me to bring in the UX Agent? It'll look at the page through your customer's eyes and tell me what to sharpen."*
-
-If yes → run the **UX Agent** (see below). Then immediately apply the improvements to `index.html`.
-If no → proceed to Step 6.
+Invoke `@design-agent`. It reads the full conversation (including the approved copy), asks a few quick feeling-based questions, builds the page with Tailwind CSS, runs a UX review, and delivers the result. Wait for their approval before going live.
 
 ---
 
-### Step 6 — Get final approval before going live
+### Step 4 — Get final approval before going live
 
 Never push to GitHub without a clear yes. Ask:
 
@@ -149,7 +127,7 @@ Wait for a clear yes. If they want changes, make them first — then ask again. 
 
 ---
 
-### Step 7 — Push to GitHub and go live
+### Step 5 — Push to GitHub and go live
 
 Once approved, run these commands in sequence:
 
@@ -171,9 +149,14 @@ Then wait ~30 seconds and confirm: *"You're live. Go check it."*
 
 ### File
 - Single file: `index.html`
-- Plain HTML + CSS only (no frameworks, no JavaScript)
-- All CSS in a `<style>` block in the `<head>`
 - Mobile responsive
+- Tailwind CSS via CDN (utility classes)
+- FlyonUI via CDN (semantic component classes + device mockups)
+- Google Fonts via `<link>` tags
+- Real photos from Pexels, Unsplash, or Pixabay
+- Custom colors and fonts in `tailwind.config`
+- Vanilla JS for scroll animations and interactions
+- The Design Agent handles all visual decisions — see `.claude/agents/design-agent.md`
 
 ### Page structure (in order)
 
@@ -188,9 +171,6 @@ Then wait ~30 seconds and confirm: *"You're live. Go check it."*
 ```
 
 ### Design rules
-- Use the color they chose as the main accent color
-- Background: white or very dark (based on their vibe answer)
-- Font: system fonts only — `-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif`
 - The page should look like a real company — not a demo, not a school project
 - No filler text anywhere. Every word should be sharp and intentional.
 
@@ -231,43 +211,24 @@ That last question is the one that matters most. Make sure it's answered somewhe
 
 ---
 
-## Subagent: Design Agent
+## Subagent: Design Agent (`@design-agent`)
 
-**When invoked:** After all concept questions are answered, before building.
+**When invoked:** After concept questions (and Copywriter Agent if used), before going live.
 
-**What you do:**
-Based on the company name, concept, angle and vibe answer — put together a complete visual style. Present it clearly before applying anything.
+**Lives in:** `.claude/agents/design-agent.md`
+**Reference patterns:** `references/tailwind-patterns.md`
 
-**Output format — always present as a proposal first:**
+The Design Agent is a separate agent file with full instructions. It:
+- Reads everything already created in the session (proposition, copy, strategy, name)
+- Asks 5 quick feeling-based questions to determine visual direction (no design jargon)
+- Translates strategic choices into a professional Tailwind CSS landing page
+- Uses existing copy — does not rewrite what's already there
+- Makes each website unique based on the competitor's proposition
+- **Runs a UX review** after building — checks the page through the customer's eyes and applies improvements before delivery
 
-```
-🎨 DESIGN PROPOSAL
+**Output:** `index.html` (Tailwind CSS, Google Fonts, responsive, UX-reviewed)
 
-Primary color: [hex + name, e.g. #0A0A0A Obsidian]
-Accent color:  [hex + name, e.g. #FF3B00 Disruption Orange]
-Background:    [hex + description]
-Text color:    [hex]
-
-Font feel: [e.g. "Bold, condensed headings. Lots of breathing room. No decorative fonts."]
-
-Overall look: [2-3 sentences — what does this brand look and feel like in the real world?]
-
-Section mood:
-- Hero: [brief description]
-- Problem: [brief description]
-- Solution: [brief description]
-- Danger: [brief description]
-
-→ Shall I use this to build the page?
-```
-
-Wait for a yes or adjustments before continuing. If they want changes, update and ask again. Max one round of changes.
-
-**Design principles:**
-- The style must feel like a real company that would genuinely scare existing players
-- Avoid generic startup looks (no teal gradients, no safe sans-serif on white)
-- Colors should match the angle — a company going after big banks looks different from one shaking up logistics
-- Bold beats safe
+Do not duplicate or override the Design Agent's instructions here — everything is in the agent file.
 
 ---
 
@@ -331,66 +292,4 @@ Wait for approval or change requests. Apply changes and show again if needed. Ma
 - No corporate language, no buzzwords, no passive voice
 - Write like the founders are angry about the way things are — and certain they've found a better way
 
----
-
-## Subagent: UX Agent
-
-**When invoked:** After `index.html` has been built.
-
-**What you do:**
-Look at the finished page through the eyes of the target customer. Say what works, what's unclear, and what's missing. Then give Claude Code clear instructions to fix it.
-
-**Review — check each section:**
-
-1. **Hero** — Is it immediately clear what this company does? Would someone new understand it in 5 seconds?
-2. **Problem** — Is the pain real and specific? Or does it sound generic?
-3. **Solution** — Are the three things genuinely different? Do they connect to the main angle?
-4. **Danger** — Is this sharp enough to make existing players uncomfortable?
-5. **Customer** — Does the target customer feel real and specific?
-6. **Overall text** — Anything vague, safe, or forgettable?
-
-**Output format — always as clear instructions:**
-
-```
-🔍 UX REVIEW
-
-What works:
-- [specific observation]
-- [specific observation]
-
-What to fix:
-→ [Section name]: [specific instruction — what to change and why]
-→ [Section name]: [specific instruction]
-→ [Section name]: [specific instruction]
-
-The one thing that makes the biggest difference:
-[Single most important improvement — be direct]
-```
-
-After showing the review, immediately apply all changes to `index.html` without asking again. The review is the green light.
-
-**Review principles:**
-- Look at it as the target customer, not as a designer
-- Every line of text should earn its place — if it's vague, cut it or sharpen it
-- The page should feel like it was written by people who are fed up with the status quo
 - Clear beats clever
-
-### 🎨 Design Agent (`@design-agent`)
-Bouwt de competitor website. Roep aan als de propositie, strategie en copy klaar zijn.
-Dit is de LAATSTE stap in het proces — de design agent leest alles wat de andere agents al hebben gemaakt.
-
-De design agent:
-- Leest automatisch alle output van eerdere agents (propositie, copy, strategie, naam)
-- Stelt 5 korte gevoel-vragen om de visuele richting te bepalen (geen designjargon)
-- Vertaalt jullie strategische keuzes naar een professioneel design
-- Bouwt een responsive landing page met Tailwind CSS
-- Gebruikt bestaande copy — schrijft niet opnieuw wat er al is
-- Opent het resultaat direct in de browser
-
-Volgorde tijdens de sessie:
-1. Eerst: strategie en propositie uitwerken
-2. Dan: copy en features schrijven
-3. Tot slot: @design-agent aanroepen om de website te bouwen
-
-Technische patronen: references/tailwind-patterns.md
-Output: competitor-website.html
